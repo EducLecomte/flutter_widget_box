@@ -37,7 +37,7 @@ class _ScaffoldFeaturesPageState extends State<ScaffoldFeaturesPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
+              decoration: BoxDecoration(color: Colors.green),
               child: Text('Menu Drawer', style: TextStyle(color: Colors.white, fontSize: 24)),
             ),
             ListTile(

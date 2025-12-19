@@ -126,7 +126,7 @@ class _ListInteractionWidgetsPageState extends State<ListInteractionWidgetsPage>
                 for (int index = 0; index < _items.length; index += 1)
                   ListTile(
                     key: ValueKey(_items[index]),
-                    tileColor: index.isEven ? Colors.blue[50] : Colors.blue[100],
+                    tileColor: index.isEven ? Colors.green[50] : Colors.green[100],
                     title: Text('Item ${_items[index]}'),
                     trailing: const Icon(Icons.drag_handle),
                   ),

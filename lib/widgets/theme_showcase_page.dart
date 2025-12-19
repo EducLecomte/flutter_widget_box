@@ -19,12 +19,12 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
       // Pour M3, on utilise un ColorScheme basé sur une "seed color"
       // Pour M2, on utilise un ColorScheme basé sur un "swatch"
       colorScheme: _useMaterial3
-          ? ColorScheme.fromSeed(seedColor: Colors.teal)
-          : ColorScheme.fromSwatch(primarySwatch: Colors.teal),
+          ? ColorScheme.fromSeed(seedColor: Colors.green)
+          : ColorScheme.fromSwatch(primarySwatch: Colors.green),
       appBarTheme: AppBarTheme(
         backgroundColor: _useMaterial3
-            ? ColorScheme.fromSeed(seedColor: Colors.teal).inversePrimary
-            : Colors.teal,
+            ? ColorScheme.fromSeed(seedColor: Colors.green).inversePrimary
+            : Colors.green,
       ),
     );
 
