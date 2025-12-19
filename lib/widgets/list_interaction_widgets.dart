@@ -9,7 +9,7 @@ class ListInteractionWidgetsPage extends StatefulWidget {
 }
 
 class _ListInteractionWidgetsPageState extends State<ListInteractionWidgetsPage> {
-  final List<int> _items = List<int>.generate(10, (index) => index);
+  final List<int> _items = List<int>.generate(6, (index) => index);
   int? _selectedChoiceChip;
   List<String> _selectedFilterChips = [];
 
@@ -110,28 +110,27 @@ class _ListInteractionWidgetsPageState extends State<ListInteractionWidgetsPage>
                 ),
               ],
             ),_buildSectionTitle(context, 'ReorderableListView'),
-            SizedBox(
-              height: 300, // Give a fixed height for demonstration
-              child: ReorderableListView(
-                onReorder: (int oldIndex, int newIndex) {
-                  setState(() {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    final int item = _items.removeAt(oldIndex);
-                    _items.insert(newIndex, item);
-                  });
-                },
-                children: <Widget>[
-                  for (int index = 0; index < _items.length; index += 1)
-                    ListTile(
-                      key: ValueKey(_items[index]),
-                      tileColor: index.isEven ? Colors.blue[50] : Colors.blue[100],
-                      title: Text('Item ${_items[index]}'),
-                      trailing: const Icon(Icons.drag_handle),
-                    ),
-                ],
-              ),
+            ReorderableListView(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              onReorder: (int oldIndex, int newIndex) {
+                setState(() {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  final int item = _items.removeAt(oldIndex);
+                  _items.insert(newIndex, item);
+                });
+              },
+              children: <Widget>[
+                for (int index = 0; index < _items.length; index += 1)
+                  ListTile(
+                    key: ValueKey(_items[index]),
+                    tileColor: index.isEven ? Colors.blue[50] : Colors.blue[100],
+                    title: Text('Item ${_items[index]}'),
+                    trailing: const Icon(Icons.drag_handle),
+                  ),
+              ],
             ),
           ],
         ),

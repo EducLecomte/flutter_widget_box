@@ -54,8 +54,8 @@ class WidgetBoxHome extends StatelessWidget {
       WidgetCategory(name: 'Display', icon: Icons.visibility_outlined, widgetPage: const DisplayWidgetsPage()),
       WidgetCategory(name: 'Dialogs, Alerts & Panels', icon: Icons.feedback_outlined, widgetPage: const DialogWidgetsPage()),
       WidgetCategory(name: 'Animation', icon: Icons.animation, widgetPage: const AnimationWidgetsPage()),
-      WidgetCategory(name: 'Scaffold Features', icon: Icons.web_asset_outlined, widgetPage: const ScaffoldFeaturesPage()),
       WidgetCategory(name: 'Lists & Interaction', icon: Icons.list_alt, widgetPage: const ListInteractionWidgetsPage()),
+      WidgetCategory(name: 'Scaffold Features', icon: Icons.web_asset_outlined, widgetPage: const ScaffoldFeaturesPage()),
       WidgetCategory(name: 'Thèmes Material', icon: Icons.palette_outlined, widgetPage: const ThemeShowcasePage()),
     ];
 
