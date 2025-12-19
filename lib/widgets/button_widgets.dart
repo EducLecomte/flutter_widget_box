@@ -13,11 +13,11 @@ class ButtonWidgetsPage extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
-        children: const [
+        children:  [
           WidgetShowcase(
             title: 'ElevatedButton',
             widget: ElevatedButton(
-              onPressed: null, // Désactivé pour la démo
+              onPressed: () {},
               child: Text('Elevated'),
             ),
             sourceCode: '''
@@ -30,7 +30,7 @@ ElevatedButton(
           WidgetShowcase(
             title: 'TextButton',
             widget: TextButton(
-              onPressed: null,
+              onPressed: () {},
               child: Text('Text'),
             ),
             sourceCode: '''
@@ -43,7 +43,7 @@ TextButton(
           WidgetShowcase(
             title: 'OutlinedButton',
             widget: OutlinedButton(
-              onPressed: null,
+              onPressed: () {},
               child: Text('Outlined'),
             ),
             sourceCode: '''
@@ -57,7 +57,7 @@ OutlinedButton(
             title: 'IconButton',
             widget: IconButton(
               icon: const Icon(Icons.thumb_up),
-              onPressed: null,
+              onPressed: () {},
             ),
             sourceCode: '''
 IconButton(
@@ -69,7 +69,7 @@ IconButton(
           WidgetShowcase(
             title: 'FloatingActionButton',
             widget: FloatingActionButton(
-              onPressed: null,
+              onPressed: () {},
               child: const Icon(Icons.add),
             ),
             sourceCode: '''

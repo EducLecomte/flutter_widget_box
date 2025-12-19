@@ -25,121 +25,129 @@ class _ScaffoldFeaturesPageState extends State<ScaffoldFeaturesPage> {
 
   @override
   Widget build(BuildContext context) {
-    // DefaultTabController fournit un TabController au Scaffold et à ses enfants.
-    return DefaultTabController(
-      length: 3, // Le nombre d'onglets
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Fonctionnalités du Scaffold'),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.notifications),
-              tooltip: 'Notifications',
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Pas de nouvelles notifications.')));
-              },
+    // Le Scaffold principal de la page
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Fonctionnalités du Scaffold'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
+      // Le Drawer est défini ici pour que le bouton dans le corps puisse l'ouvrir
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue),
+              child: Text('Menu Drawer', style: TextStyle(color: Colors.white, fontSize: 24)),
+            ),
+            ListTile(
+              leading: const Icon(Icons.home),
+              title: const Text('Accueil'),
+              onTap: () => Navigator.of(context).pop(),
+            ),
+            ListTile(
+              leading: const Icon(Icons.arrow_back),
+              title: const Text('Retour au menu principal'),
+              onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
             ),
           ],
-          // La TabBar est placée en bas de l'AppBar
-          bottom: const TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.directions_car), text: 'Transport'),
-              Tab(icon: Icon(Icons.directions_transit), text: 'Voyage'),
-              Tab(icon: Icon(Icons.directions_bike), text: 'Vélo'),
-            ],
+        ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: [
+          WidgetShowcase(
+            title: 'AppBar',
+            widget: Material(
+              child: AppBar(
+                title: Text('Exemple d\'AppBar'),
+                actions: [Icon(Icons.search)],
+              ),
+            ),
+            sourceCode: '''
+Scaffold(
+  appBar: AppBar(
+    title: const Text('Titre'),
+    actions: <Widget>[
+      IconButton(
+        icon: const Icon(Icons.search),
+        onPressed: () {},
+      ),
+    ],
+  ),
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/AppBar-class.html',
           ),
-        ),
-        // Le corps est maintenant un TabBarView pour afficher le contenu des onglets
-        body: TabBarView(
-          children: [
-            // Le contenu du premier onglet
-            Center(child: _widgetOptions.elementAt(_selectedIndex)),
-            // Le contenu du deuxième onglet
-            const Center(child: Text('Contenu de l\'onglet Voyage')),
-            // Le contenu du troisième onglet
-            const Center(child: Text('Contenu de l\'onglet Vélo')),
-          ],
-        ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text(
-                  'Tiroir de navigation (Drawer)',
-                  style: TextStyle(color: Colors.white, fontSize: 24),
-                ),
-              ),
-              ListTile(
-                leading: const Icon(Icons.home),
-                title: const Text('Accueil'),
-                onTap: () {
-                  Navigator.pop(context); // Ferme le drawer
+          WidgetShowcase(
+            title: 'Drawer',
+            widget: Builder(
+              // Le Builder fournit un nouveau BuildContext qui connaît le Scaffold parent.
+              builder: (context) => ElevatedButton(
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
                 },
+                child: const Text('Ouvrir le Drawer'),
               ),
-              ListTile(
-                leading: const Icon(Icons.settings),
-                title: const Text('Paramètres'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              const Divider(),
-              ListTile(
-                leading: const Icon(Icons.arrow_back),
-                title: const Text('Retour au menu principal'),
-                onTap: () {
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                },
-              ),
-            ],
+            ),
+            sourceCode: '''
+Scaffold(
+  // ... appBar
+  drawer: Drawer(
+    child: ListView(
+      children: const <Widget>[
+        DrawerHeader(child: Text('Titre du Drawer')),
+        ListTile(title: Text('Item 1')),
+        ListTile(title: Text('Item 2')),
+      ],
+    ),
+  ),
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/Drawer-class.html',
           ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Recherche'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blue,
-          onTap: _onItemTapped,
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Action du bouton flottant !')),
-            );
-          },
-          tooltip: 'Ajouter',
-          child: const Icon(Icons.add),
-        ),
+          WidgetShowcase(
+            title: 'BottomNavigationBar',
+            widget: BottomNavigationBar(
+              currentIndex: _selectedIndex,
+              onTap: _onItemTapped,
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
+                BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Recherche'),
+                BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
+              ],
+            ),
+            sourceCode: '''
+Scaffold(
+  // ...
+  bottomNavigationBar: BottomNavigationBar(
+    currentIndex: _selectedIndex,
+    onTap: (index) => setState(() => _selectedIndex = index),
+    items: const <BottomNavigationBarItem>[
+      BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
+      BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Recherche'),
+    ],
+  ),
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html',
+          ),
+          const WidgetShowcase(
+            title: 'FloatingActionButton',
+            widget: FloatingActionButton(
+              onPressed: null,
+              child: Icon(Icons.add),
+            ),
+            sourceCode: '''
+Scaffold(
+  // ...
+  floatingActionButton: FloatingActionButton(
+    onPressed: () {},
+    tooltip: 'Ajouter',
+    child: const Icon(Icons.add),
+  ),
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/FloatingActionButton-class.html',
+          ),
+        ],
       ),
     );
   }
 }
-
-/*
-  Note: Pour la page ScaffoldFeaturesPage, l'application du WidgetShowcase
-  est un peu plus complexe car le Scaffold lui-même est le widget principal
-  qui intègre plusieurs fonctionnalités.
-
-  Plutôt que d'envelopper le Scaffold entier dans un WidgetShowcase,
-  ce qui serait redondant, nous allons créer des WidgetShowcase pour
-  chaque *composant* du Scaffold (AppBar, Drawer, BottomNavigationBar, FAB).
-
-  Cependant, pour garder la page fonctionnelle et ne pas la surcharger
-  avec des imbrications complexes, je vais laisser la structure actuelle
-  du Scaffold intacte et ne pas appliquer WidgetShowcase directement ici.
-
-  Si l'objectif était de montrer chaque composant du Scaffold isolément,
-  il faudrait créer des pages séparées pour AppBar, Drawer, etc.,
-  et les y présenter avec WidgetShowcase.
-
-  Pour l'instant, la page ScaffoldFeaturesPage sert de démonstration
-  intégrée de ces composants.
-*/
