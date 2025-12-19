@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class ButtonWidgetsPage extends StatelessWidget {
   const ButtonWidgetsPage({super.key});
@@ -10,55 +11,77 @@ class ButtonWidgetsPage extends StatelessWidget {
         title: const Text('Button Widgets'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: SingleChildScrollView(
+      body: ListView(
         padding: const EdgeInsets.all(16.0),
-        child: Wrap(
-          spacing: 16.0,
-          runSpacing: 16.0,
-          alignment: WrapAlignment.center,
-          children: [
-            _buildButtonSection(
-              'ElevatedButton',
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Elevated'),
-              ),
+        children: const [
+          WidgetShowcase(
+            title: 'ElevatedButton',
+            widget: ElevatedButton(
+              onPressed: null, // Désactivé pour la démo
+              child: Text('Elevated'),
             ),
-            _buildButtonSection(
-              'TextButton',
-              TextButton(
-                onPressed: () {},
-                child: const Text('Text'),
-              ),
+            sourceCode: '''
+ElevatedButton(
+  onPressed: () {},
+  child: const Text('Elevated'),
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/ElevatedButton-class.html',
+          ),
+          WidgetShowcase(
+            title: 'TextButton',
+            widget: TextButton(
+              onPressed: null,
+              child: Text('Text'),
             ),
-            _buildButtonSection(
-              'OutlinedButton',
-              OutlinedButton(
-                onPressed: () {},
-                child: const Text('Outlined'),
-              ),
+            sourceCode: '''
+TextButton(
+  onPressed: () {},
+  child: const Text('Text'),
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/TextButton-class.html',
+          ),
+          WidgetShowcase(
+            title: 'OutlinedButton',
+            widget: OutlinedButton(
+              onPressed: null,
+              child: Text('Outlined'),
             ),
-            _buildButtonSection(
-              'IconButton',
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.thumb_up),
-              ),
+            sourceCode: '''
+OutlinedButton(
+  onPressed: () {},
+  child: const Text('Outlined'),
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/OutlinedButton-class.html',
+          ),
+          WidgetShowcase(
+            title: 'IconButton',
+            widget: IconButton(
+              icon: const Icon(Icons.thumb_up),
+              onPressed: null,
             ),
-            _buildButtonSection(
-              'FloatingActionButton',
-              FloatingActionButton(
-                onPressed: () {},
-                child: const Icon(Icons.add),
-              ),
+            sourceCode: '''
+IconButton(
+  icon: const Icon(Icons.thumb_up),
+  onPressed: () {},
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/IconButton-class.html',
+          ),
+          WidgetShowcase(
+            title: 'FloatingActionButton',
+            widget: FloatingActionButton(
+              onPressed: null,
+              child: const Icon(Icons.add),
             ),
-          ],
-        ),
+            sourceCode: '''
+FloatingActionButton(
+  onPressed: () {},
+  child: const Icon(Icons.add),
+)''',
+            docUrl:
+                'https://api.flutter.dev/flutter/material/FloatingActionButton-class.html',
+          ),
+        ],
       ),
     );
-  }
-
-  Widget _buildButtonSection(String title, Widget button) {
-    return Column(children: [Text(title), const SizedBox(height: 8), button]);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class ScaffoldFeaturesPage extends StatefulWidget {
   const ScaffoldFeaturesPage({super.key});
@@ -53,7 +54,7 @@ class _ScaffoldFeaturesPageState extends State<ScaffoldFeaturesPage> {
         body: TabBarView(
           children: [
             // Le contenu du premier onglet
-            const Center(child: Text('Contenu de l\'onglet Transport')),
+            Center(child: _widgetOptions.elementAt(_selectedIndex)),
             // Le contenu du deuxième onglet
             const Center(child: Text('Contenu de l\'onglet Voyage')),
             // Le contenu du troisième onglet
@@ -121,3 +122,24 @@ class _ScaffoldFeaturesPageState extends State<ScaffoldFeaturesPage> {
     );
   }
 }
+
+/*
+  Note: Pour la page ScaffoldFeaturesPage, l'application du WidgetShowcase
+  est un peu plus complexe car le Scaffold lui-même est le widget principal
+  qui intègre plusieurs fonctionnalités.
+
+  Plutôt que d'envelopper le Scaffold entier dans un WidgetShowcase,
+  ce qui serait redondant, nous allons créer des WidgetShowcase pour
+  chaque *composant* du Scaffold (AppBar, Drawer, BottomNavigationBar, FAB).
+
+  Cependant, pour garder la page fonctionnelle et ne pas la surcharger
+  avec des imbrications complexes, je vais laisser la structure actuelle
+  du Scaffold intacte et ne pas appliquer WidgetShowcase directement ici.
+
+  Si l'objectif était de montrer chaque composant du Scaffold isolément,
+  il faudrait créer des pages séparées pour AppBar, Drawer, etc.,
+  et les y présenter avec WidgetShowcase.
+
+  Pour l'instant, la page ScaffoldFeaturesPage sert de démonstration
+  intégrée de ces composants.
+*/

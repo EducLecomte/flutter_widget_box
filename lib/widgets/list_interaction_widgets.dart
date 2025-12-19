@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class ListInteractionWidgetsPage extends StatefulWidget {
   const ListInteractionWidgetsPage({super.key});
@@ -24,30 +25,7 @@ class _ListInteractionWidgetsPageState extends State<ListInteractionWidgetsPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionTitle(context, 'ReorderableListView'),
-            SizedBox(
-              height: 300, // Give a fixed height for demonstration
-              child: ReorderableListView(
-                onReorder: (int oldIndex, int newIndex) {
-                  setState(() {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    final int item = _items.removeAt(oldIndex);
-                    _items.insert(newIndex, item);
-                  });
-                },
-                children: <Widget>[
-                  for (int index = 0; index < _items.length; index += 1)
-                    ListTile(
-                      key: Key('$index'),
-                      tileColor: index.isEven ? Colors.blue[50] : Colors.blue[100],
-                      title: Text('Item ${_items[index]}'),
-                      trailing: const Icon(Icons.drag_handle),
-                    ),
-                ],
-              ),
-            ),
+            
             _buildSectionTitle(context, 'ChoiceChip'),
             Wrap(
               spacing: 8.0,
@@ -131,6 +109,29 @@ class _ListInteractionWidgetsPageState extends State<ListInteractionWidgetsPage>
                   },
                 ),
               ],
+            ),_buildSectionTitle(context, 'ReorderableListView'),
+            SizedBox(
+              height: 300, // Give a fixed height for demonstration
+              child: ReorderableListView(
+                onReorder: (int oldIndex, int newIndex) {
+                  setState(() {
+                    if (oldIndex < newIndex) {
+                      newIndex -= 1;
+                    }
+                    final int item = _items.removeAt(oldIndex);
+                    _items.insert(newIndex, item);
+                  });
+                },
+                children: <Widget>[
+                  for (int index = 0; index < _items.length; index += 1)
+                    ListTile(
+                      key: ValueKey(_items[index]),
+                      tileColor: index.isEven ? Colors.blue[50] : Colors.blue[100],
+                      title: Text('Item ${_items[index]}'),
+                      trailing: const Icon(Icons.drag_handle),
+                    ),
+                ],
+              ),
             ),
           ],
         ),

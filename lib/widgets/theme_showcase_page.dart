@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class ThemeShowcasePage extends StatefulWidget {
   const ThemeShowcasePage({super.key});
@@ -50,51 +51,81 @@ class _ThemeShowcasePageState extends State<ThemeShowcasePage> {
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: Center(
-            child: Column(
-              children: [
-                const Card(
-                  child: Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text(
-                        'Ces widgets utilisent le thème sélectionné. Observez les changements de style !'),
-                  ),
+            child: Column(children: [
+              const Card(
+                child: Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Text(
+                      'Ces widgets utilisent le thème sélectionné. Observez les changements de style !'),
                 ),
-                const SizedBox(height: 24),
-                const TextField(
+              ),
+              const SizedBox(height: 24),
+              WidgetShowcase(
+                title: 'TextField',
+                widget: const TextField(
                   decoration: InputDecoration(
                     labelText: 'Champ de saisie',
                     border: OutlineInputBorder(),
                   ),
                 ),
-                const SizedBox(height: 24),
-                Wrap(
-                  spacing: 16,
-                  runSpacing: 16,
-                  alignment: WrapAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('ElevatedButton'),
-                    ),
-                    OutlinedButton(
-                      onPressed: () {},
-                      child: const Text('OutlinedButton'),
-                    ),
-                    const Chip(
-                      label: Text('Chip'),
-                      avatar: CircleAvatar(child: Text('A')),
-                    ),
-                  ],
+                sourceCode: '''
+const TextField(
+  decoration: InputDecoration(
+    labelText: 'Champ de saisie',
+    border: OutlineInputBorder(),
+  ),
+)''',
+                docUrl: 'https://api.flutter.dev/flutter/material/TextField-class.html',
+              ),
+              WidgetShowcase(
+                title: 'ElevatedButton',
+                widget: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('ElevatedButton'),
                 ),
-              ],
-            ),
+                sourceCode: '''
+ElevatedButton(
+  onPressed: () {},
+  child: const Text('ElevatedButton'),
+)''',
+                docUrl: 'https://api.flutter.dev/flutter/material/ElevatedButton-class.html',
+              ),
+              WidgetShowcase(
+                title: 'OutlinedButton',
+                widget: OutlinedButton(
+                  onPressed: () {},
+                  child: const Text('OutlinedButton'),
+                ),
+                sourceCode: '''
+OutlinedButton(
+  onPressed: () {},
+  child: const Text('OutlinedButton'),
+)''',
+                docUrl: 'https://api.flutter.dev/flutter/material/OutlinedButton-class.html',
+              ),
+              WidgetShowcase(
+                title: 'Chip',
+                widget: const Chip(
+                  label: Text('Chip'),
+                  avatar: CircleAvatar(child: Text('A')),
+                ),
+                sourceCode: '''
+const Chip(
+  label: Text('Chip'),
+  avatar: CircleAvatar(child: Text('A')),
+)''',
+                docUrl: 'https://api.flutter.dev/flutter/material/Chip-class.html',
+              ),
+            ]),
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             // Le SnackBar utilisera aussi le thème local
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('FAB cliqué !')),
+              SnackBar(
+                content: Text('FAB cliqué ! (Thème: ${_useMaterial3 ? 'M3' : 'M2'})'),
+              ),
             );
           },
           child: const Icon(Icons.add_reaction_outlined),

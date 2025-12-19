@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class DisplayWidgetsPage extends StatelessWidget {
   const DisplayWidgetsPage({super.key});
@@ -15,62 +16,99 @@ class DisplayWidgetsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionTitle(context, 'Text'),
-            const Text(
-              'Ceci est un widget Text simple. Vous pouvez le styliser avec différentes polices, couleurs et tailles.',
-              style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Texte stylisé',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                    color: Colors.purple,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-            _buildSectionTitle(context, 'Icon'),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Icon(Icons.home, size: 40, color: Colors.blue),
-                Icon(Icons.settings, size: 40, color: Colors.grey),
-                Icon(Icons.favorite, size: 40, color: Colors.red),
-              ],
-            ),
-            _buildSectionTitle(context, 'Image'),
-            const Text('Depuis le réseau:'),
-            Center(
-              child: Image.network(
-                'https://flutter.dev/images/flutter-logo-sharing.png',
-                height: 100,
+            WidgetShowcase(
+              title: 'Text (Simple)',
+              widget: Text(
+                'Ceci est un widget Text simple.',
+                style: TextStyle(fontSize: 16),
               ),
+              sourceCode: '''
+const Text(
+  'Ceci est un widget Text simple.',
+  style: TextStyle(fontSize: 16),
+)''',
+              docUrl: 'https://api.flutter.dev/flutter/widgets/Text-class.html',
             ),
-            const SizedBox(height: 8),
-            const Text('Depuis les assets (à ajouter dans pubspec.yaml):'),
-            Center(child: Image.asset('assets/images/flutter_logo.png', height: 100)),
-            _buildSectionTitle(context, 'Progress Indicators'),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(width: 100, child: LinearProgressIndicator()),
-              ],
+            WidgetShowcase(
+              title: 'Text (Stylisé)',
+              widget: Text(
+                'Texte stylisé',
+                style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              sourceCode: '''
+Text(
+  'Texte stylisé',
+  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+        color: Colors.purple,
+        fontWeight: FontWeight.bold,
+      ),
+)''',
+              docUrl: 'https://api.flutter.dev/flutter/widgets/Text-class.html',
+            ),
+            WidgetShowcase(
+              title: 'Icon',
+              widget: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Icon(Icons.home, size: 40, color: Colors.blue),
+                  Icon(Icons.settings, size: 40, color: Colors.grey),
+                  Icon(Icons.favorite, size: 40, color: Colors.red),
+                ],
+              ),
+              sourceCode: '''
+const Row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: [
+    Icon(Icons.home, size: 40, color: Colors.blue),
+    Icon(Icons.settings, size: 40, color: Colors.grey),
+    Icon(Icons.favorite, size: 40, color: Colors.red),
+  ],
+)''',
+              docUrl: 'https://api.flutter.dev/flutter/widgets/Icon-class.html',
+            ),
+            WidgetShowcase(
+              title: 'Image.network',
+              widget: Center(
+                child: Image.network(
+                  'https://www.pedagogeek.fr/img/sunpx.jpg',
+                  height: 100,
+                ),
+              ),
+              sourceCode: '''
+Image.network(
+  'https://www.pedagogeek.fr/img/sunpx.jpg',
+  height: 100,
+)''',
+              docUrl: 'https://api.flutter.dev/flutter/widgets/Image-class.html',
+            ),
+            WidgetShowcase(
+              title: 'Image.asset',
+              widget: Center(child: Image.asset('assets/images/flutter_logo.png', height: 100)),
+              sourceCode: '''
+Image.asset('assets/images/flutter_logo.png', height: 100)''',
+              docUrl: 'https://api.flutter.dev/flutter/widgets/Image-class.html',
+            ),
+            WidgetShowcase(
+              title: 'Progress Indicators',
+              widget: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(width: 100, child: LinearProgressIndicator()),
+                ],
+              ),
+              sourceCode: '''
+const Row(
+  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  children: [
+    CircularProgressIndicator(),
+    SizedBox(width: 100, child: LinearProgressIndicator()),
+  ],
+)''',
+              docUrl: 'https://api.flutter.dev/flutter/material/CircularProgressIndicator-class.html',
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildSectionTitle(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: Theme.of(context).textTheme.titleLarge),
-          const Divider(),
-        ],
       ),
     );
   }

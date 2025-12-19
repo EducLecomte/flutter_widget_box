@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class AnimationWidgetsPage extends StatefulWidget {
   const AnimationWidgetsPage({super.key});
@@ -43,50 +44,83 @@ class _AnimationWidgetsPageState extends State<AnimationWidgetsPage> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Center(
-          child: Column(
-            children: [
-              _buildSectionTitle(context, 'AnimatedContainer'),
-              AnimatedContainer(
-                width: _width,
-                height: _height,
-                decoration: BoxDecoration(
-                  color: _color,
-                  borderRadius: _borderRadius,
-                ),
-                duration: const Duration(seconds: 1),
-                curve: Curves.fastOutSlowIn,
+          child: Column(children: [
+            WidgetShowcase(
+              title: 'AnimatedContainer',
+              widget: Column(
+                children: [
+                  AnimatedContainer(
+                    width: _width,
+                    height: _height,
+                    decoration: BoxDecoration(
+                      color: _color,
+                      borderRadius: _borderRadius,
+                    ),
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.fastOutSlowIn,
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: _animateContainer,
+                    child: const Text('Animer le conteneur'),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _animateContainer,
-                child: const Text('Animer le conteneur'),
+              sourceCode: '''
+AnimatedContainer(
+  width: _width,
+  height: _height,
+  decoration: BoxDecoration(
+    color: _color,
+    borderRadius: _borderRadius,
+  ),
+  duration: const Duration(seconds: 1),
+  curve: Curves.fastOutSlowIn,
+)
+
+ElevatedButton(
+  onPressed: _animateContainer,
+  child: const Text('Animer le conteneur'),
+)''',
+              docUrl: 'https://api.flutter.dev/flutter/widgets/AnimatedContainer-class.html',
+            ),
+            WidgetShowcase(
+              title: 'AnimatedOpacity',
+              widget: Column(
+                children: [
+                  AnimatedOpacity(
+                    opacity: _visible ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 500),
+                    child: const FlutterLogo(size: 100),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _visible = !_visible;
+                      });
+                    },
+                    child: const Text('Afficher/Masquer'),
+                  ),
+                ],
               ),
-              _buildSectionTitle(context, 'AnimatedOpacity'),
-              AnimatedOpacity(
-                opacity: _visible ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 500),
-                child: const FlutterLogo(size: 100),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    _visible = !_visible;
-                  });
-                },
-                child: const Text('Afficher/Masquer'),
-              ),
-            ],
+              sourceCode: '''
+AnimatedOpacity(
+  opacity: _visible ? 1.0 : 0.0,
+  duration: const Duration(milliseconds: 500),
+  child: const FlutterLogo(size: 100),
+)
+
+ElevatedButton(
+  onPressed: () { setState(() { _visible = !_visible; }); },
+  child: const Text('Afficher/Masquer'),
+)''',
+              docUrl: 'https://api.flutter.dev/flutter/widgets/AnimatedOpacity-class.html',
+            ),
+          ]),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildSectionTitle(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24.0),
-      child: Text(title, style: Theme.of(context).textTheme.titleLarge),
-    );
+      )
+    ;
   }
 }

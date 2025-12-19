@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class InputWidgetsPage extends StatefulWidget {
   const InputWidgetsPage({super.key});
@@ -23,71 +24,138 @@ class _InputWidgetsPageState extends State<InputWidgetsPage> {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          const Text('TextField'),
-          const TextField(
-            decoration: InputDecoration(
-              labelText: 'Entrez du texte',
-              hintText: 'Placeholder',
-              border: OutlineInputBorder(),
+          WidgetShowcase(
+            title: 'TextField',
+            widget: const TextField(
+              decoration: InputDecoration(
+                labelText: 'Entrez du texte',
+                hintText: 'Placeholder',
+                border: OutlineInputBorder(),
+              ),
             ),
+            sourceCode: '''
+const TextField(
+  decoration: InputDecoration(
+    labelText: 'Entrez du texte',
+    hintText: 'Placeholder',
+    border: OutlineInputBorder(),
+  ),
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/TextField-class.html',
           ),
-          const SizedBox(height: 24),
-          const Text('Checkbox'),
-          CheckboxListTile(
-            title: const Text('Cochez-moi'),
-            value: _isChecked,
-            onChanged: (bool? value) {
-              setState(() {
-                _isChecked = value ?? false;
-              });
-            },
+          WidgetShowcase(
+            title: 'CheckboxListTile',
+            widget: CheckboxListTile(
+              title: const Text('Cochez-moi'),
+              value: _isChecked,
+              onChanged: (bool? value) {
+                setState(() {
+                  _isChecked = value ?? false;
+                });
+              },
+            ),
+            sourceCode: '''
+CheckboxListTile(
+  title: const Text('Cochez-moi'),
+  value: _isChecked,
+  onChanged: (bool? value) {
+    setState(() {
+      _isChecked = value ?? false;
+    });
+  },
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/CheckboxListTile-class.html',
           ),
-          const SizedBox(height: 24),
-          const Text('Radio Buttons'),
-          RadioListTile<String>(
-            title: const Text('Option 1'),
-            value: 'option1',
-            groupValue: _radioValue,
-            onChanged: (String? value) {
-              setState(() {
-                _radioValue = value;
-              });
-            },
+          WidgetShowcase(
+            title: 'RadioListTile',
+            widget: Column(
+              children: [
+                RadioListTile<String>(
+                  title: const Text('Option 1'),
+                  value: 'option1',
+                  groupValue: _radioValue,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _radioValue = value;
+                    });
+                  },
+                ),
+                RadioListTile<String>(
+                  title: const Text('Option 2'),
+                  value: 'option2',
+                  groupValue: _radioValue,
+                  onChanged: (String? value) {
+                    setState(() {
+                      _radioValue = value;
+                    });
+                  },
+                ),
+              ],
+            ),
+            sourceCode: '''
+RadioListTile<String>(
+  title: const Text('Option 1'),
+  value: 'option1',
+  groupValue: _radioValue,
+  onChanged: (String? value) {
+    setState(() {
+      _radioValue = value;
+    });
+  },
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/RadioListTile-class.html',
           ),
-          RadioListTile<String>(
-            title: const Text('Option 2'),
-            value: 'option2',
-            groupValue: _radioValue,
-            onChanged: (String? value) {
-              setState(() {
-                _radioValue = value;
-              });
-            },
+          WidgetShowcase(
+            title: 'SwitchListTile',
+            widget: SwitchListTile(
+              title: const Text('Activer/Désactiver'),
+              value: _switchValue,
+              onChanged: (bool value) {
+                setState(() {
+                  _switchValue = value;
+                });
+              },
+            ),
+            sourceCode: '''
+SwitchListTile(
+  title: const Text('Activer/Désactiver'),
+  value: _switchValue,
+  onChanged: (bool value) {
+    setState(() {
+      _switchValue = value;
+    });
+  },
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/SwitchListTile-class.html',
           ),
-          const SizedBox(height: 24),
-          const Text('Switch'),
-          SwitchListTile(
-            title: const Text('Activer/Désactiver'),
-            value: _switchValue,
-            onChanged: (bool value) {
-              setState(() {
-                _switchValue = value;
-              });
-            },
-          ),
-          const SizedBox(height: 24),
-          const Text('Slider'),
-          Slider(
-            value: _sliderValue,
-            min: 0,
-            max: 100,
-            divisions: 10,
-            label: _sliderValue.round().toString(),
-            onChanged: (double value) {
-              setState(() {
-                _sliderValue = value;
-              });
-            },
+          WidgetShowcase(
+            title: 'Slider',
+            widget: Slider(
+              value: _sliderValue,
+              min: 0,
+              max: 100,
+              divisions: 10,
+              label: _sliderValue.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _sliderValue = value;
+                });
+              },
+            ),
+            sourceCode: '''
+Slider(
+  value: _sliderValue,
+  min: 0,
+  max: 100,
+  divisions: 10,
+  label: _sliderValue.round().toString(),
+  onChanged: (double value) {
+    setState(() {
+      _sliderValue = value;
+    });
+  },
+)''',
+            docUrl: 'https://api.flutter.dev/flutter/material/Slider-class.html',
           ),
         ],
       ),
