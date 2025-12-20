@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
+import 'package:flutter_widgetbox/main.dart';
 
 class ListInteractionWidgetsPage extends StatefulWidget {
   const ListInteractionWidgetsPage({super.key});
@@ -11,14 +11,14 @@ class ListInteractionWidgetsPage extends StatefulWidget {
 class _ListInteractionWidgetsPageState extends State<ListInteractionWidgetsPage> {
   final List<int> _items = List<int>.generate(6, (index) => index);
   int? _selectedChoiceChip;
-  List<String> _selectedFilterChips = [];
+  final List<String> _selectedFilterChips = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lists & Interaction Widgets'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: const [ThemeSwitchButton()],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

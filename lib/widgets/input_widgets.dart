@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/main.dart';
 import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class InputWidgetsPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _InputWidgetsPageState extends State<InputWidgetsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Input & Selection Widgets'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: const [ThemeSwitchButton()],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),

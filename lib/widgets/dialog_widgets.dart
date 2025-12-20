@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/main.dart';
 import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class DialogWidgetsPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class DialogWidgetsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dialogs, Alerts & Panels'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: const [ThemeSwitchButton()],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -31,7 +32,7 @@ void _showAlertDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Titre de l\'AlertDialog'),
+        title: const Text('Titre de l'AlertDialog'),
         content: const Text('Ceci est le contenu de la boîte de dialogue.'),
         actions: <Widget>[
           TextButton(

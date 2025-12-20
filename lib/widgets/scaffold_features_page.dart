@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/main.dart';
 import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class ScaffoldFeaturesPage extends StatefulWidget {
@@ -10,12 +11,6 @@ class ScaffoldFeaturesPage extends StatefulWidget {
 
 class _ScaffoldFeaturesPageState extends State<ScaffoldFeaturesPage> {
   int _selectedIndex = 0;
-
-  static const List<Widget> _widgetOptions = <Widget>[
-    Icon(Icons.home, size: 150, color: Colors.blue),
-    Icon(Icons.search, size: 150, color: Colors.green),
-    Icon(Icons.person, size: 150, color: Colors.orange),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,7 +24,7 @@ class _ScaffoldFeaturesPageState extends State<ScaffoldFeaturesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Fonctionnalités du Scaffold'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: const [ThemeSwitchButton()],
       ),
       // Le Drawer est défini ici pour que le bouton dans le corps puisse l'ouvrir
       drawer: Drawer(

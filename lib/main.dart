@@ -7,7 +7,6 @@ import 'package:flutter_widgetbox/widgets/layout_widgets.dart';
 import 'package:flutter_widgetbox/widgets/animation_widgets.dart';
 import 'package:flutter_widgetbox/widgets/scaffold_features_page.dart';
 import 'package:flutter_widgetbox/widgets/list_interaction_widgets.dart';
-import 'package:flutter_widgetbox/widgets/theme_showcase_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,16 +24,45 @@ class WidgetCategory {
   });
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  static void toggleTheme(BuildContext context) {
+    context.findAncestorStateOfType<_MyAppState>()?.toggleTheme();
+  }
+
+  static bool isMaterial3(BuildContext context) {
+    return context.findAncestorStateOfType<_MyAppState>()?.useMaterial3 ?? false;
+  }
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool useMaterial3 = false;
+
+  void toggleTheme() {
+    setState(() {
+      useMaterial3 = !useMaterial3;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Widgetbox',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreenAccent),
-        useMaterial3: true, // Utilisation de Material 3 par défaut
+        useMaterial3: useMaterial3,
+        colorScheme: useMaterial3
+            ? ColorScheme.fromSeed(seedColor: Colors.green)
+            : ColorScheme.fromSwatch(primarySwatch: Colors.green),
+        appBarTheme: AppBarTheme(
+          backgroundColor: useMaterial3
+              ? ColorScheme.fromSeed(seedColor: Colors.green).inversePrimary
+              : Colors.green,
+          foregroundColor: useMaterial3 ? null : Colors.white,
+        ),
       ),
       debugShowCheckedModeBanner: false,
       home: const WidgetBoxHome(),
@@ -56,12 +84,10 @@ class WidgetBoxHome extends StatelessWidget {
       WidgetCategory(name: 'Animation', icon: Icons.animation, widgetPage: const AnimationWidgetsPage()),
       WidgetCategory(name: 'Lists & Interaction', icon: Icons.list_alt, widgetPage: const ListInteractionWidgetsPage()),
       WidgetCategory(name: 'Scaffold Features', icon: Icons.web_asset_outlined, widgetPage: const ScaffoldFeaturesPage()),
-      WidgetCategory(name: 'Thèmes Material', icon: Icons.palette_outlined, widgetPage: const ThemeShowcasePage()),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -73,6 +99,9 @@ class WidgetBoxHome extends StatelessWidget {
             const Text('Flutter Widgetbox'),
           ],
         ),
+        actions: const [
+          ThemeSwitchButton(),
+        ],
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8.0),
@@ -96,6 +125,27 @@ class WidgetBoxHome extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class ThemeSwitchButton extends StatelessWidget {
+  const ThemeSwitchButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Text('M2', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        Switch(
+          value: Theme.of(context).useMaterial3,
+          onChanged: (value) => MyApp.toggleTheme(context),
+          activeColor: Colors.white,
+          activeTrackColor: Colors.green,
+        ),
+        const Text('M3', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        const SizedBox(width: 8),
+      ],
     );
   }
 }

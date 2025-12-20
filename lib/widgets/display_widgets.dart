@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/main.dart';
 import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class DisplayWidgetsPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class DisplayWidgetsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Display Widgets'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: const [ThemeSwitchButton()],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

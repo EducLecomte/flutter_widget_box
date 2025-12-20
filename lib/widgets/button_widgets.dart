@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_widgetbox/main.dart';
 import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
 
 class ButtonWidgetsPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class ButtonWidgetsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Button Widgets'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        actions: const [ThemeSwitchButton()],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
