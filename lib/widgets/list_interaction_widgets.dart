@@ -12,6 +12,9 @@ class _ListInteractionWidgetsPageState extends State<ListInteractionWidgetsPage>
   final List<int> _items = List<int>.generate(6, (index) => index);
   int? _selectedChoiceChip;
   final List<String> _selectedFilterChips = [];
+  final List<String> _dismissItems = List.generate(5, (i) => 'Élément $i  (Glissez-moi)');
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,8 @@ class _ListInteractionWidgetsPageState extends State<ListInteractionWidgetsPage>
         title: const Text('Lists & Interaction Widgets'),
         actions: const [ThemeSwitchButton()],
       ),
-      body: SingleChildScrollView(
+           body: SingleChildScrollView(
+
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,9 +136,42 @@ class _ListInteractionWidgetsPageState extends State<ListInteractionWidgetsPage>
                   ),
               ],
             ),
+            _buildSectionTitle(context, 'ExpansionTile'),
+            const Card(
+              child: ExpansionTile(
+                leading: Icon(Icons.info),
+                title: Text('Cliquez pour voir les détails'),
+                children: [
+                  ListTile(title: Text('Détail numéro 1')),
+                  ListTile(title: Text('Détail numéro 2')),
+                ],
+              ),
+            ),
+            _buildSectionTitle(context, 'Dismissible (Swipe to delete)'),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: _dismissItems.length,
+              itemBuilder: (context, index) {
+                final item = _dismissItems[index];
+                return Dismissible(
+                  key: Key(item),
+                  background: Container(color: Colors.red, alignment: Alignment.centerRight, padding: const EdgeInsets.only(right: 20), child: const Icon(Icons.delete, color: Colors.white)),
+                  onDismissed: (direction) {
+                    setState(() {
+                      _dismissItems.removeAt(index);
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Élément $index supprimé')));
+                  },
+                  child: Card(
+                    child: ListTile(title: Text(item)),
+                  ),
+                );
+              },
+            ),
           ],
         ),
-      ),
+        ),
     );
   }
 

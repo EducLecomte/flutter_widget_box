@@ -7,6 +7,7 @@ import 'package:flutter_widgetbox/widgets/layout_widgets.dart';
 import 'package:flutter_widgetbox/widgets/animation_widgets.dart';
 import 'package:flutter_widgetbox/widgets/scaffold_features_page.dart';
 import 'package:flutter_widgetbox/widgets/list_interaction_widgets.dart';
+import 'package:flutter_widgetbox/widgets/cupertino_widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -84,6 +85,7 @@ class WidgetBoxHome extends StatelessWidget {
       WidgetCategory(name: 'Animation', icon: Icons.animation, widgetPage: const AnimationWidgetsPage()),
       WidgetCategory(name: 'Lists & Interaction', icon: Icons.list_alt, widgetPage: const ListInteractionWidgetsPage()),
       WidgetCategory(name: 'Scaffold Features', icon: Icons.web_asset_outlined, widgetPage: const ScaffoldFeaturesPage()),
+      WidgetCategory(name: 'Cupertino (iOS)', icon: Icons.phone_iphone, widgetPage: const CupertinoWidgetsPage()),
     ];
 
     return Scaffold(
