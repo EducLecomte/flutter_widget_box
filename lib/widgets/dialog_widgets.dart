@@ -144,7 +144,7 @@ void _showAboutDialog(BuildContext context) {
     context: context,
     applicationName: 'Flutter Widgetbox',
     applicationVersion: '1.0.0',
-    applicationLegalese: '© 2025 Gemini Code Assist',
+    applicationLegalese: '© 2025 pedagogeek.fr',
     children: <Widget>[
       const Padding(
         padding: EdgeInsets.only(top: 15),
@@ -235,7 +235,7 @@ void _showAboutDialog(BuildContext context) {
       context: context,
       applicationName: 'Flutter Widgetbox',
       applicationVersion: '1.0.0',
-      applicationLegalese: '© 2025 Gemini Code Assist',
+      applicationLegalese: '© 2025 pedagogeek.fr',
       children: <Widget>[
         const Padding(
           padding: EdgeInsets.only(top: 15),
