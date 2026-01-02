@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WidgetShowcase extends StatelessWidget {
@@ -76,10 +77,24 @@ class WidgetShowcase extends StatelessWidget {
         ),
         actions: [
           TextButton(
+            onPressed: () => _copyToClipboard(context),
+            child: const Text('Copier'),
+          ),
+          TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Fermer'),
           ),
         ],
+      ),
+    );
+  }
+
+  void _copyToClipboard(BuildContext context) {
+    Clipboard.setData(ClipboardData(text: sourceCode));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Code copié dans le presse-papier !'),
+        duration: Duration(seconds: 2),
       ),
     );
   }

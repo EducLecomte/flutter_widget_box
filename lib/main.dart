@@ -33,7 +33,8 @@ class MyApp extends StatefulWidget {
   }
 
   static bool isMaterial3(BuildContext context) {
-    return context.findAncestorStateOfType<_MyAppState>()?.useMaterial3 ?? false;
+    return context.findAncestorStateOfType<_MyAppState>()?.useMaterial3 ??
+        false;
   }
 
   @override
@@ -77,15 +78,51 @@ class WidgetBoxHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categories = [
-      WidgetCategory(name: 'Layout', icon: Icons.dashboard_outlined, widgetPage: const LayoutWidgetsPage()),
-      WidgetCategory(name: 'Buttons', icon: Icons.touch_app_outlined, widgetPage: const ButtonWidgetsPage()),
-      WidgetCategory(name: 'Input & Selections', icon: Icons.input_outlined, widgetPage: const InputWidgetsPage()),
-      WidgetCategory(name: 'Display', icon: Icons.visibility_outlined, widgetPage: const DisplayWidgetsPage()),
-      WidgetCategory(name: 'Dialogs, Alerts & Panels', icon: Icons.feedback_outlined, widgetPage: const DialogWidgetsPage()),
-      WidgetCategory(name: 'Animation', icon: Icons.animation, widgetPage: const AnimationWidgetsPage()),
-      WidgetCategory(name: 'Lists & Interaction', icon: Icons.list_alt, widgetPage: const ListInteractionWidgetsPage()),
-      WidgetCategory(name: 'Scaffold Features', icon: Icons.web_asset_outlined, widgetPage: const ScaffoldFeaturesPage()),
-      WidgetCategory(name: 'Cupertino (iOS)', icon: Icons.phone_iphone, widgetPage: const CupertinoWidgetsPage()),
+      WidgetCategory(
+        name: 'Layout',
+        icon: Icons.dashboard_outlined,
+        widgetPage: const LayoutWidgetsPage(),
+      ),
+      WidgetCategory(
+        name: 'Buttons',
+        icon: Icons.touch_app_outlined,
+        widgetPage: const ButtonWidgetsPage(),
+      ),
+      WidgetCategory(
+        name: 'Input & Selections',
+        icon: Icons.input_outlined,
+        widgetPage: const InputWidgetsPage(),
+      ),
+      WidgetCategory(
+        name: 'Display',
+        icon: Icons.visibility_outlined,
+        widgetPage: const DisplayWidgetsPage(),
+      ),
+      WidgetCategory(
+        name: 'Dialogs, Alerts & Panels',
+        icon: Icons.feedback_outlined,
+        widgetPage: const DialogWidgetsPage(),
+      ),
+      WidgetCategory(
+        name: 'Animation',
+        icon: Icons.animation,
+        widgetPage: const AnimationWidgetsPage(),
+      ),
+      WidgetCategory(
+        name: 'Lists & Interaction',
+        icon: Icons.list_alt,
+        widgetPage: const ListInteractionWidgetsPage(),
+      ),
+      WidgetCategory(
+        name: 'Scaffold Features',
+        icon: Icons.web_asset_outlined,
+        widgetPage: const ScaffoldFeaturesPage(),
+      ),
+      WidgetCategory(
+        name: 'Cupertino (iOS)',
+        icon: Icons.phone_iphone,
+        widgetPage: const CupertinoWidgetsPage(),
+      ),
     ];
 
     return Scaffold(
@@ -101,9 +138,7 @@ class WidgetBoxHome extends StatelessWidget {
             const Text('Flutter Widgetbox'),
           ],
         ),
-        actions: const [
-          ThemeSwitchButton(),
-        ],
+        actions: const [ThemeSwitchButton()],
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(8.0),
@@ -114,8 +149,14 @@ class WidgetBoxHome extends StatelessWidget {
             elevation: 2.0,
             margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
             child: ListTile(
-              leading: Icon(category.icon, color: Theme.of(context).colorScheme.primary),
-              title: Text(category.name, style: const TextStyle(fontWeight: FontWeight.w500)),
+              leading: Icon(
+                category.icon,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              title: Text(
+                category.name,
+                style: const TextStyle(fontWeight: FontWeight.w500),
+              ),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16.0),
               onTap: () {
                 Navigator.push(
@@ -138,14 +179,20 @@ class ThemeSwitchButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const Text('M2', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        const Text(
+          'M2',
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        ),
         Switch(
           value: Theme.of(context).useMaterial3,
           onChanged: (value) => MyApp.toggleTheme(context),
-          activeColor: Colors.white,
+          activeThumbColor: Colors.white,
           activeTrackColor: Colors.green,
         ),
-        const Text('M3', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
+        const Text(
+          'M3',
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(width: 8),
       ],
     );
