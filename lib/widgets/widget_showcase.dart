@@ -56,12 +56,11 @@ class _WidgetShowcaseActions extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (data.description != null)
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            tooltip: 'Description & Usage',
-            onPressed: () => _showDescription(context),
-          ),
+        IconButton(
+          icon: const Icon(Icons.info_outline),
+          tooltip: 'Description & Usage',
+          onPressed: () => _showDescription(context),
+        ),
         IconButton(
           icon: const Icon(Icons.copy),
           tooltip: 'Copier le code',
@@ -86,7 +85,7 @@ class _WidgetShowcaseActions extends StatelessWidget {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Description & Usage'),
-        content: SingleChildScrollView(child: Text(data.description!)),
+        content: SingleChildScrollView(child: Text(data.description)),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
