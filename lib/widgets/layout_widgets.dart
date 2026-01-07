@@ -61,7 +61,7 @@ Container(
                         margin: const EdgeInsets.all(8),
                         padding: const EdgeInsets.all(16),
                         color: Colors.lightBlue[100],
-                        child: Text('Item \${index + 1}'),
+                        child: Text('Item ${index + 1}'),
                       ),
                     ),
                   ),
@@ -361,7 +361,7 @@ Table(
                       children: List.generate(9, (index) {
                         return Container(
                           color: Colors.green[100 * (index % 9 + 1)],
-                          child: Center(child: Text('Item \${index + 1}')),
+                          child: Center(child: Text('Item ${index + 1}')),
                         );
                       }),
                     ),
