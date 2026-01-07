@@ -41,6 +41,11 @@ class WidgetShowcase extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
+                      icon: const Icon(Icons.copy),
+                      tooltip: 'Copier le code',
+                      onPressed: () => _copyToClipboard(context),
+                    ),
+                    IconButton(
                       icon: const Icon(Icons.code),
                       tooltip: 'Voir le code',
                       onPressed: () => _showSourceCode(context),
