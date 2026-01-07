@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widgetbox/main.dart';
 import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
+import 'package:flutter_widgetbox/widgets/widget_data.dart';
 
 class DialogWidgetsPage extends StatelessWidget {
   const DialogWidgetsPage({super.key});
@@ -16,12 +17,13 @@ class DialogWidgetsPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         children: [
           WidgetShowcase(
-            title: 'AlertDialog',
-            widget: ElevatedButton(
-              onPressed: () => _showAlertDialog(context),
-              child: const Text('Afficher AlertDialog'),
-            ),
-            sourceCode: '''
+            data: WidgetData(
+              title: 'AlertDialog',
+              widget: ElevatedButton(
+                onPressed: () => _showAlertDialog(context),
+                child: const Text('Afficher AlertDialog'),
+              ),
+              sourceCode: '''
 ElevatedButton(
   onPressed: () => _showAlertDialog(context),
   child: const Text('Afficher AlertDialog'),
@@ -32,7 +34,7 @@ void _showAlertDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Titre de l'AlertDialog'),
+        title: const Text('Titre de l\\'AlertDialog'),
         content: const Text('Ceci est le contenu de la boîte de dialogue.'),
         actions: <Widget>[
           TextButton(
@@ -48,15 +50,21 @@ void _showAlertDialog(BuildContext context) {
     },
   );
 }''',
-            docUrl: 'https://api.flutter.dev/flutter/material/AlertDialog-class.html',
+              docUrl:
+                  'https://api.flutter.dev/flutter/material/AlertDialog-class.html',
+              description:
+                  'Une boîte de dialogue modale standard qui interrompt l\'utilisateur. '
+                  'Utilisez-la pour des confirmations critiques ou des informations importantes nécessitant une action (OK, Annuler).',
+            ),
           ),
           WidgetShowcase(
-            title: 'SimpleDialog',
-            widget: ElevatedButton(
-              onPressed: () => _showSimpleDialog(context),
-              child: const Text('Afficher SimpleDialog'),
-            ),
-            sourceCode: '''
+            data: WidgetData(
+              title: 'SimpleDialog',
+              widget: ElevatedButton(
+                onPressed: () => _showSimpleDialog(context),
+                child: const Text('Afficher SimpleDialog'),
+              ),
+              sourceCode: '''
 ElevatedButton(
   onPressed: () => _showSimpleDialog(context),
   child: const Text('Afficher SimpleDialog'),
@@ -76,15 +84,21 @@ void _showSimpleDialog(BuildContext context) {
     },
   );
 }''',
-            docUrl: 'https://api.flutter.dev/flutter/material/SimpleDialog-class.html',
+              docUrl:
+                  'https://api.flutter.dev/flutter/material/SimpleDialog-class.html',
+              description:
+                  'Offre une liste de choix à l\'utilisateur. Moins intrusif qu\'une AlertDialog complexe, '
+                  'il est idéal pour changer un compte ou sélectionner une option simple.',
+            ),
           ),
           WidgetShowcase(
-            title: 'SnackBar',
-            widget: ElevatedButton(
-              onPressed: () => _showSnackBar(context),
-              child: const Text('Afficher SnackBar'),
-            ),
-            sourceCode: '''
+            data: WidgetData(
+              title: 'SnackBar',
+              widget: ElevatedButton(
+                onPressed: () => _showSnackBar(context),
+                child: const Text('Afficher SnackBar'),
+              ),
+              sourceCode: '''
 ElevatedButton(
   onPressed: () => _showSnackBar(context),
   child: const Text('Afficher SnackBar'),
@@ -98,15 +112,21 @@ void _showSnackBar(BuildContext context) {
     ),
   );
 }''',
-            docUrl: 'https://api.flutter.dev/flutter/material/SnackBar-class.html',
+              docUrl:
+                  'https://api.flutter.dev/flutter/material/SnackBar-class.html',
+              description:
+                  'Un message temporaire en bas de l\'écran. '
+                  'Utilisé pour confirmer une action ("Email envoyé") sans bloquer l\'utilisateur. Peut contenir une action d\'annulation.',
+            ),
           ),
           WidgetShowcase(
-            title: 'BottomSheet',
-            widget: ElevatedButton(
-              onPressed: () => _showBottomSheet(context),
-              child: const Text('Afficher BottomSheet'),
-            ),
-            sourceCode: '''
+            data: WidgetData(
+              title: 'BottomSheet',
+              widget: ElevatedButton(
+                onPressed: () => _showBottomSheet(context),
+                child: const Text('Afficher BottomSheet'),
+              ),
+              sourceCode: '''
 ElevatedButton(
   onPressed: () => _showBottomSheet(context),
   child: const Text('Afficher BottomSheet'),
@@ -125,15 +145,21 @@ void _showBottomSheet(BuildContext context) {
     },
   );
 }''',
-            docUrl: 'https://api.flutter.dev/flutter/material/showModalBottomSheet.html',
+              docUrl:
+                  'https://api.flutter.dev/flutter/material/showModalBottomSheet.html',
+              description:
+                  'Un panneau qui glisse depuis le bas de l\'écran. '
+                  'Alternative moderne aux dialogues pour les menus d\'actions, les options de partage ou les formulaires secondaires.',
+            ),
           ),
           WidgetShowcase(
-            title: 'AboutDialog',
-            widget: ElevatedButton(
-              onPressed: () => _showAboutDialog(context),
-              child: const Text('Afficher AboutDialog'),
-            ),
-            sourceCode: '''
+            data: WidgetData(
+              title: 'AboutDialog',
+              widget: ElevatedButton(
+                onPressed: () => _showAboutDialog(context),
+                child: const Text('Afficher AboutDialog'),
+              ),
+              sourceCode: '''
 ElevatedButton(
   onPressed: () => _showAboutDialog(context),
   child: const Text('Afficher AboutDialog'),
@@ -153,7 +179,12 @@ void _showAboutDialog(BuildContext context) {
     ],
   );
 }''',
-            docUrl: 'https://api.flutter.dev/flutter/material/AboutDialog-class.html',
+              docUrl:
+                  'https://api.flutter.dev/flutter/material/AboutDialog-class.html',
+              description:
+                  'Une boîte de dialogue standard pour afficher les informations légales, la version et les licences de l\'application. '
+                  'Généré automatiquement par Flutter avec showAboutDialog.',
+            ),
           ),
         ],
       ),
@@ -194,11 +225,15 @@ void _showAboutDialog(BuildContext context) {
           title: const Text('Choisissez une option'),
           children: <Widget>[
             SimpleDialogOption(
-              onPressed: () { Navigator.of(context).pop(); },
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: const Text('Option 1'),
             ),
             SimpleDialogOption(
-              onPressed: () { Navigator.of(context).pop(); },
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: const Text('Option 2'),
             ),
           ],
@@ -222,9 +257,7 @@ void _showAboutDialog(BuildContext context) {
       builder: (BuildContext context) {
         return const SizedBox(
           height: 200,
-          child: Center(
-            child: Text('Ceci est un BottomSheet'),
-          ),
+          child: Center(child: Text('Ceci est un BottomSheet')),
         );
       },
     );
@@ -239,8 +272,10 @@ void _showAboutDialog(BuildContext context) {
       children: <Widget>[
         const Padding(
           padding: EdgeInsets.only(top: 15),
-          child: Text('Ceci est une application de démonstration des widgets Flutter.'),
-        )
+          child: Text(
+            'Ceci est une application de démonstration des widgets Flutter.',
+          ),
+        ),
       ],
     );
   }

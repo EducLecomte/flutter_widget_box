@@ -1,27 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_widgetbox/widgets/widget_data.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WidgetShowcase extends StatelessWidget {
-  /// Le nom du widget à afficher.
-  final String title;
+  final WidgetData data;
 
-  /// L'instance du widget à présenter.
-  final Widget widget;
-
-  /// Le code source brut de l'exemple.
-  final String sourceCode;
-
-  /// L'URL vers la documentation officielle du widget.
-  final String docUrl;
-
-  const WidgetShowcase({
-    super.key,
-    required this.title,
-    required this.widget,
-    required this.sourceCode,
-    required this.docUrl,
-  });
+  const WidgetShowcase({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -33,38 +18,81 @@ class WidgetShowcase extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(title, style: Theme.of(context).textTheme.titleLarge),
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.copy),
-                      tooltip: 'Copier le code',
-                      onPressed: () => _copyToClipboard(context),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.code),
-                      tooltip: 'Voir le code',
-                      onPressed: () => _showSourceCode(context),
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.link),
-                      tooltip: 'Documentation',
-                      onPressed: _launchDocUrl,
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            _WidgetShowcaseHeader(data: data),
             const Divider(),
             const SizedBox(height: 16),
-            // Centre le widget de démo pour une meilleure présentation
-            Center(child: widget),
+            Center(child: data.widget),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _WidgetShowcaseHeader extends StatelessWidget {
+  final WidgetData data;
+
+  const _WidgetShowcaseHeader({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(data.title, style: Theme.of(context).textTheme.titleLarge),
+        _WidgetShowcaseActions(data: data),
+      ],
+    );
+  }
+}
+
+class _WidgetShowcaseActions extends StatelessWidget {
+  final WidgetData data;
+
+  const _WidgetShowcaseActions({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (data.description != null)
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: 'Description & Usage',
+            onPressed: () => _showDescription(context),
+          ),
+        IconButton(
+          icon: const Icon(Icons.copy),
+          tooltip: 'Copier le code',
+          onPressed: () => _copyToClipboard(context),
+        ),
+        IconButton(
+          icon: const Icon(Icons.code),
+          tooltip: 'Voir le code',
+          onPressed: () => _showSourceCode(context),
+        ),
+        IconButton(
+          icon: const Icon(Icons.link),
+          tooltip: 'Documentation',
+          onPressed: _launchDocUrl,
+        ),
+      ],
+    );
+  }
+
+  void _showDescription(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Description & Usage'),
+        content: SingleChildScrollView(child: Text(data.description!)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Fermer'),
+          ),
+        ],
       ),
     );
   }
@@ -76,7 +104,7 @@ class WidgetShowcase extends StatelessWidget {
         title: const Text('Code Source'),
         content: SingleChildScrollView(
           child: Text(
-            sourceCode,
+            data.sourceCode,
             style: const TextStyle(fontFamily: 'monospace'),
           ),
         ),
@@ -95,7 +123,7 @@ class WidgetShowcase extends StatelessWidget {
   }
 
   void _copyToClipboard(BuildContext context) {
-    Clipboard.setData(ClipboardData(text: sourceCode));
+    Clipboard.setData(ClipboardData(text: data.sourceCode));
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Code copié dans le presse-papier !'),
@@ -105,10 +133,9 @@ class WidgetShowcase extends StatelessWidget {
   }
 
   Future<void> _launchDocUrl() async {
-    final uri = Uri.parse(docUrl);
+    final uri = Uri.parse(data.docUrl);
     if (!await launchUrl(uri)) {
-      // Idéalement, afficher un SnackBar ou une alerte si l'URL ne peut être lancée.
-      debugPrint('Could not launch $docUrl');
+      debugPrint('Could not launch ${data.docUrl}');
     }
   }
 }

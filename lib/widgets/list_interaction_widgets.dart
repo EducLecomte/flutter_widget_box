@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widgetbox/main.dart';
 import 'package:flutter_widgetbox/widgets/widget_showcase.dart';
+import 'package:flutter_widgetbox/widgets/widget_data.dart';
 
 class ListInteractionWidgetsPage extends StatefulWidget {
   const ListInteractionWidgetsPage({super.key});
@@ -12,13 +13,12 @@ class ListInteractionWidgetsPage extends StatefulWidget {
 
 class _ListInteractionWidgetsPageState
     extends State<ListInteractionWidgetsPage> {
-  final List<int> _items = List<int>.generate(6, (index) => index);
+  final List<String> _items = List<String>.generate(
+    6,
+    (index) => 'Item ${index + 1}',
+  );
   int? _selectedChoiceChip;
   final List<String> _selectedFilterChips = [];
-  final List<String> _dismissItems = List.generate(
-    5,
-    (i) => 'Élément $i  (Glissez-moi)',
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -33,217 +33,194 @@ class _ListInteractionWidgetsPageState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             WidgetShowcase(
-              title: 'ChoiceChip',
-              widget: Wrap(
-                spacing: 8.0,
-                children: List<Widget>.generate(3, (int index) {
-                  return ChoiceChip(
-                    label: Text('Choix ${index + 1}'),
-                    selected: _selectedChoiceChip == index,
-                    onSelected: (bool selected) {
-                      setState(() {
-                        _selectedChoiceChip = selected ? index : null;
-                      });
-                    },
-                  );
-                }).toList(),
-              ),
-              sourceCode: '''
-Wrap(
-  spacing: 8.0,
-  children: List<Widget>.generate(3, (int index) {
-    return ChoiceChip(
-      label: Text('Choix \${index + 1}'),
-      selected: _selectedChoiceChip == index,
-      onSelected: (bool selected) {
-        setState(() {
-          _selectedChoiceChip = selected ? index : null;
-        });
-      },
-    );
-  }).toList(),
-)''',
-              docUrl:
-                  'https://api.flutter.dev/flutter/material/ChoiceChip-class.html',
-            ),
-            WidgetShowcase(
-              title: 'FilterChip',
-              widget: Wrap(
-                spacing: 8.0,
-                children: [
-                  FilterChip(
-                    label: const Text('Filtre A'),
-                    selected: _selectedFilterChips.contains('A'),
-                    onSelected: (bool selected) {
-                      setState(() {
-                        if (selected) {
-                          _selectedFilterChips.add('A');
-                        } else {
-                          _selectedFilterChips.removeWhere(
-                            (String name) => name == 'A',
-                          );
-                        }
-                      });
-                    },
-                  ),
-                  FilterChip(
-                    label: const Text('Filtre B'),
-                    selected: _selectedFilterChips.contains('B'),
-                    onSelected: (bool selected) {
-                      setState(() {
-                        if (selected) {
-                          _selectedFilterChips.add('B');
-                        } else {
-                          _selectedFilterChips.removeWhere(
-                            (String name) => name == 'B',
-                          );
-                        }
-                      });
-                    },
-                  ),
-                  FilterChip(
-                    label: const Text('Filtre C'),
-                    selected: _selectedFilterChips.contains('C'),
-                    onSelected: (bool selected) {
-                      setState(() {
-                        if (selected) {
-                          _selectedFilterChips.add('C');
-                        } else {
-                          _selectedFilterChips.removeWhere(
-                            (String name) => name == 'C',
-                          );
-                        }
-                      });
-                    },
-                  ),
-                ],
-              ),
-              sourceCode: '''
-Wrap(
-  spacing: 8.0,
-  children: [
-    FilterChip(
-      label: const Text('Filtre A'),
-      selected: _selectedFilterChips.contains('A'),
-      onSelected: (bool selected) {
-        setState(() {
-          if (selected) _selectedFilterChips.add('A');
-          else _selectedFilterChips.remove('A');
-        });
-      },
-    ),
-    // ... autres FilterChips
-  ],
-)''',
-              docUrl:
-                  'https://api.flutter.dev/flutter/material/FilterChip-class.html',
-            ),
-            WidgetShowcase(
-              title: 'ActionChip',
-              widget: Wrap(
-                spacing: 8.0,
-                children: [
-                  ActionChip(
-                    avatar: const Icon(Icons.add),
-                    label: const Text('Ajouter'),
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Action "Ajouter" cliquée!'),
-                        ),
-                      );
-                    },
-                  ),
-                  ActionChip(
-                    avatar: const Icon(Icons.share),
-                    label: const Text('Partager'),
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Action "Partager" cliquée!'),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              sourceCode: '''
-ActionChip(
-  avatar: const Icon(Icons.add),
-  label: const Text('Ajouter'),
-  onPressed: () {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Action "Ajouter" cliquée!')),
-    );
-  },
-)''',
-              docUrl:
-                  'https://api.flutter.dev/flutter/material/ActionChip-class.html',
-            ),
-            WidgetShowcase(
-              title: 'ReorderableListView',
-              widget: SizedBox(
-                height: 300, // Hauteur contrainte pour l'exemple
-                child: ReorderableListView(
-                  physics: const ClampingScrollPhysics(),
-                  onReorder: (int oldIndex, int newIndex) {
-                    setState(() {
-                      if (oldIndex < newIndex) {
-                        newIndex -= 1;
-                      }
-                      final int item = _items.removeAt(oldIndex);
-                      _items.insert(newIndex, item);
-                    });
-                  },
-                  children: <Widget>[
-                    for (int index = 0; index < _items.length; index += 1)
-                      ListTile(
-                        key: ValueKey(_items[index]),
-                        tileColor: index.isEven
-                            ? Colors.green[50]
-                            : Colors.green[100],
-                        title: Text('Item ${_items[index]}'),
-                        trailing: const Icon(Icons.drag_handle),
-                      ),
-                  ],
+              data: WidgetData(
+                title: 'ChoiceChip',
+                widget: Wrap(
+                  spacing: 8.0,
+                  children: List.generate(3, (int index) {
+                    return ChoiceChip(
+                      label: Text('Item $index'),
+                      selected: _selectedChoiceChip == index,
+                      onSelected: (bool selected) {
+                        setState(() {
+                          _selectedChoiceChip = selected ? index : null;
+                        });
+                      },
+                    );
+                  }).toList(),
                 ),
-              ),
-              sourceCode: '''
-ReorderableListView(
-  onReorder: (int oldIndex, int newIndex) {
+                sourceCode: '''
+ChoiceChip(
+  label: Text('Item \$index'),
+  selected: _selectedChoiceChip == index,
+  onSelected: (bool selected) {
     setState(() {
-      if (oldIndex < newIndex) {
-        newIndex -= 1;
-      }
-      final int item = _items.removeAt(oldIndex);
-      _items.insert(newIndex, item);
+      _selectedChoiceChip = selected ? index : null;
     });
   },
-  children: <Widget>[
-    for (int index = 0; index < _items.length; index += 1)
-      ListTile(
-        key: ValueKey(_items[index]),
-        title: Text('Item \${_items[index]}'),
-        trailing: const Icon(Icons.drag_handle),
-      ),
-  ],
 )''',
-              docUrl:
-                  'https://api.flutter.dev/flutter/material/ReorderableListView-class.html',
+                docUrl:
+                    'https://api.flutter.dev/flutter/material/ChoiceChip-class.html',
+                description:
+                    'Un composant de sélection unique (comme un Radio button). '
+                    'Permet de choisir une option parmi plusieurs mutuellement exclusives.',
+              ),
             ),
             WidgetShowcase(
-              title: 'ExpansionTile',
-              widget: const Card(
-                child: ExpansionTile(
-                  leading: Icon(Icons.info),
-                  title: Text('Cliquez pour voir les détails'),
+              data: WidgetData(
+                title: 'FilterChip',
+                widget: Wrap(
+                  spacing: 8.0,
                   children: [
-                    ListTile(title: Text('Détail numéro 1')),
-                    ListTile(title: Text('Détail numéro 2')),
+                    FilterChip(
+                      label: const Text('Filter 1'),
+                      selected: _selectedFilterChips.contains('Filter 1'),
+                      onSelected: (bool selected) {
+                        setState(() {
+                          if (selected) {
+                            _selectedFilterChips.add('Filter 1');
+                          } else {
+                            _selectedFilterChips.remove('Filter 1');
+                          }
+                        });
+                      },
+                    ),
+                    FilterChip(
+                      label: const Text('Filter 2'),
+                      selected: _selectedFilterChips.contains('Filter 2'),
+                      onSelected: (bool selected) {
+                        setState(() {
+                          if (selected) {
+                            _selectedFilterChips.add('Filter 2');
+                          } else {
+                            _selectedFilterChips.remove('Filter 2');
+                          }
+                        });
+                      },
+                    ),
                   ],
                 ),
+                sourceCode: '''
+FilterChip(
+  label: const Text('Filter 1'),
+  selected: _selectedFilterChips.contains('Filter 1'),
+  onSelected: (bool selected) {
+    setState(() {
+      if (selected) {
+        _selectedFilterChips.add('Filter 1');
+      } else {
+        _selectedFilterChips.remove('Filter 1');
+      }
+    });
+  },
+)''',
+                docUrl:
+                    'https://api.flutter.dev/flutter/material/FilterChip-class.html',
+                description:
+                    'Un composant de sélection multiple (comme une Checkbox). '
+                    'Utilisé pour activer ou désactiver des filtres ou des options cumulables.',
               ),
-              sourceCode: '''
+            ),
+            WidgetShowcase(
+              data: WidgetData(
+                title: 'ActionChip',
+                widget: ActionChip(
+                  avatar: const Icon(Icons.favorite),
+                  label: const Text('Action Chip'),
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Action Chip pressed!')),
+                    );
+                  },
+                ),
+                sourceCode: '''
+ActionChip(
+  avatar: const Icon(Icons.favorite),
+  label: const Text('Action Chip'),
+  onPressed: () { ... },
+)''',
+                docUrl:
+                    'https://api.flutter.dev/flutter/material/ActionChip-class.html',
+                description:
+                    'Un bouton compact qui déclenche une action. '
+                    'Souvent utilisé pour des actions contextuelles ou secondaires.',
+              ),
+            ),
+            WidgetShowcase(
+              data: WidgetData(
+                title: 'ReorderableListView',
+                widget: SizedBox(
+                  height: 200,
+                  child: ReorderableListView(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    onReorder: (int oldIndex, int newIndex) {
+                      setState(() {
+                        if (oldIndex < newIndex) {
+                          newIndex -= 1;
+                        }
+                        final String item = _items.removeAt(oldIndex);
+                        _items.insert(newIndex, item);
+                      });
+                    },
+                    children: [
+                      for (int index = 0; index < _items.length; index++)
+                        ListTile(
+                          key: Key(_items[index]),
+                          title: Text(_items[index]),
+                          trailing: const Icon(Icons.drag_handle),
+                        ),
+                    ],
+                  ),
+                ),
+                sourceCode: '''
+ReorderableListView(
+  onReorder: (int oldIndex, int newIndex) { ... },
+  children: [ ... ],
+)''',
+                docUrl:
+                    'https://api.flutter.dev/flutter/material/ReorderableListView-class.html',
+                description:
+                    'Une liste dont les éléments peuvent être réorganisés par glisser-déposer. '
+                    'Nécessite la gestion manuelle de la liste sous-jacente dans le callback onReorder.',
+              ),
+            ),
+            WidgetShowcase(
+              data: WidgetData(
+                title: 'ListTile',
+                widget: const ListTile(
+                  leading: Icon(Icons.map),
+                  title: Text('Map'),
+                  subtitle: Text('Navigate to destination'),
+                  trailing: Icon(Icons.chevron_right),
+                ),
+                sourceCode: '''
+ListTile(
+  leading: Icon(Icons.map),
+  title: Text('Map'),
+  subtitle: Text('Navigate to destination'),
+  trailing: Icon(Icons.chevron_right),
+)''',
+                docUrl:
+                    'https://api.flutter.dev/flutter/material/ListTile-class.html',
+                description:
+                    'Un widget de ligne de liste polyvalent, souvent utilisé dans les ListView. '
+                    'Il peut afficher un titre, un sous-titre, un widget principal (leading) et un widget secondaire (trailing).',
+              ),
+            ),
+            WidgetShowcase(
+              data: WidgetData(
+                title: 'ExpansionTile',
+                widget: const Card(
+                  child: ExpansionTile(
+                    leading: Icon(Icons.info),
+                    title: Text('Cliquez pour voir les détails'),
+                    children: [
+                      ListTile(title: Text('Détail numéro 1')),
+                      ListTile(title: Text('Détail numéro 2')),
+                    ],
+                  ),
+                ),
+                sourceCode: '''
 const Card(
   child: ExpansionTile(
     leading: Icon(Icons.info),
@@ -254,54 +231,45 @@ const Card(
     ],
   ),
 )''',
-              docUrl:
-                  'https://api.flutter.dev/flutter/material/ExpansionTile-class.html',
+                docUrl:
+                    'https://api.flutter.dev/flutter/material/ExpansionTile-class.html',
+                description:
+                    'ExpansionTile est un élément de liste qui peut être étendu pour révéler plus de détails ou replié pour gagner de la place. '
+                    'Il est parfait pour créer des listes à plusieurs niveaux, des FAQ, ou des formulaires longs '
+                    'en masquant la complexité jusqu\'à ce que l\'utilisateur en ait besoin.',
+              ),
             ),
             WidgetShowcase(
-              title: 'Dismissible (Swipe to delete)',
-              widget: SizedBox(
-                height: 300,
-                child: ListView.builder(
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: _dismissItems.length,
-                  itemBuilder: (context, index) {
-                    final item = _dismissItems[index];
-                    return Dismissible(
-                      key: Key(item),
-                      background: Container(
-                        color: Colors.red,
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.only(right: 20),
-                        child: const Icon(Icons.delete, color: Colors.white),
-                      ),
-                      onDismissed: (direction) {
-                        setState(() {
-                          _dismissItems.removeAt(index);
-                        });
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Élément $index supprimé')),
-                        );
-                      },
-                      child: Card(child: ListTile(title: Text(item))),
+              data: WidgetData(
+                title: 'Dismissible',
+                widget: Dismissible(
+                  key: const Key('dismissible_item'),
+                  onDismissed: (direction) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Item dismissed')),
                     );
                   },
+                  background: Container(color: Colors.red),
+                  child: const ListTile(
+                    title: Text('Swipe me to dismiss'),
+                    tileColor: Colors.grey,
+                  ),
                 ),
-              ),
-              sourceCode: '''
+                sourceCode: '''
 Dismissible(
-  key: Key(item),
-  background: Container(color: Colors.red, ...),
-  onDismissed: (direction) {
-    setState(() {
-      _dismissItems.removeAt(index);
-    });
-  },
-  child: Card(
-    child: ListTile(title: Text(item)),
+  key: const Key('dismissible_item'),
+  onDismissed: (direction) { ... },
+  background: Container(color: Colors.red),
+  child: const ListTile(
+    title: Text('Swipe me to dismiss'),
   ),
 )''',
-              docUrl:
-                  'https://api.flutter.dev/flutter/widgets/Dismissible-class.html',
+                docUrl:
+                    'https://api.flutter.dev/flutter/widgets/Dismissible-class.html',
+                description:
+                    'Permet de supprimer un élément de liste par glissement (swipe). '
+                    'Fournit un feedback visuel avec une couleur d\'arrière-plan.',
+              ),
             ),
           ],
         ),
